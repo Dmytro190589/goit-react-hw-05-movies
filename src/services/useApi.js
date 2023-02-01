@@ -23,22 +23,13 @@ export  async function fetchSearchFilms(query) {
   });
   return response.data.results;
 }
-
-
-// export function fetchByMovieId(id) {
-//   return axios.get(`movie/${id}`, {
-//     params: {
-//       api_key: API_KEY,
-//     },
-//   });
-// }
 export async function fetchByMovieId(id) {
-  const response = axios(`movie/${id}`, {
+  const response = await axios(`movie/${id}`, {
     params: {
       api_key: API_KEY,
     },
   });
-  return response.data
+  return response.data;
 }
 
 

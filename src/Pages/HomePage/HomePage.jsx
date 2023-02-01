@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import {  Outlet } from 'react-router-dom';
+import {  useLocation } from 'react-router-dom';
 import { fetchTrendingFilm } from 'services/useApi';
 import { H1, Li, LinkModal, Section, Ul } from './HomePage.styled';
 
-export const HomePage = () => {
+ const HomePage = () => {
   const [trendList, setTrendList] = useState([]);
-
+  const location = useLocation();
   useEffect(() => {
-    fetchTrendingFilm().then(setTrendList)
+    fetchTrendingFilm().then(setTrendList);
   }, []);
 
   return (
@@ -16,12 +16,13 @@ export const HomePage = () => {
       <Ul>
         {trendList.map(({ title, id }) => (
           <Li key={id}>
-            <LinkModal to={`movies/${id}`}>{title}</LinkModal>
+            <LinkModal to={`movies/${id}`} state={{ from: location }}>
+              {title}
+            </LinkModal>
           </Li>
         ))}
       </Ul>
-      <Outlet />
     </Section>
   );
 };
-
+export default HomePage;

@@ -1,5 +1,6 @@
+import { Suspense } from 'react';
 import { useState, useEffect } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { fetchByMovieId } from 'services/useApi';
 import {
   B,
@@ -8,13 +9,15 @@ import {
   H2,
   Img,
   LinkAdd,
+  LinkBack,
   P,
   Section,
   Ul,
 } from './MovieDetails.styled';
 
-export const MovieDetails = () => {
+const MovieDetails = () => {
   const [film, setFilm] = useState(null);
+  const location = useLocation();
 
   const { id: filmId } = useParams();
   useEffect(() => {
@@ -24,6 +27,7 @@ export const MovieDetails = () => {
     <Section>
       {film && (
         <>
+          <LinkBack to={location.state?.from ?? '/'}> Go Back</LinkBack>
           <Div>
             <Img
               src={`https://image.tmdb.org/t/p/w500/${film.poster_path}`}
@@ -45,16 +49,23 @@ export const MovieDetails = () => {
             <P>Additional information</P>
             <Ul>
               <li>
-                <LinkAdd to="cast">Cast</LinkAdd>
+                <LinkAdd to="cast" state={{ from: location.state.from }}>
+                  Cast
+                </LinkAdd>
               </li>
               <li>
-                <LinkAdd to="reviews">Reviews </LinkAdd>
+                <LinkAdd to="reviews" state={{ from: location.state.from }}>
+                  Reviews
+                </LinkAdd>
               </li>
             </Ul>
           </DivAdd>
-          <Outlet />
+          <Suspense fallback={<div>Loading....</div>}>
+            <Outlet />
+          </Suspense>
         </>
       )}
     </Section>
   );
 };
+export default MovieDetails;

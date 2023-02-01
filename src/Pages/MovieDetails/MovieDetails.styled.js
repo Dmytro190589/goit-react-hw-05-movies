@@ -62,3 +62,20 @@ text-decoration: none;
 color: blue;
 }
 `
+export const LinkBack = styled(Link)`
+display: inline-block;
+padding: 2px 7px;
+text-decoration: none;
+text-align: center;
+border-radius: 5px;
+color: #EAECFF;
+font-size: 14px;
+font-family: 'Abel', sans-serif;
+background-color: #0A82F3;
+width: 60px;
+height: 20px;
+margin-bottom: 10px;
+:hover, :focus{
+    background-color: #29BFAB;
+}
+`

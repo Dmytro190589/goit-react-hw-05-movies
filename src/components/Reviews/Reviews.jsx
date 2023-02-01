@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { fetchReviewsOfMovie } from 'services/useApi';
 import { Li, P, Span, Ul } from './Reviews.styled';
 
-export const Reviews = () => {
+ const Reviews = () => {
   const [reviews, setReviews] = useState(null);
   const { id: filmId } = useParams();
 
@@ -31,3 +31,4 @@ export const Reviews = () => {
     </>
   );
 };
+export default Reviews;

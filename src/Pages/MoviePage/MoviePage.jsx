@@ -1,24 +1,27 @@
 import { SearchBar } from 'components/SearchBar/SearchBar';
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { fetchSearchFilms } from 'services/useApi';
 import { Li, LinkModal, Ul } from './MoviePage.styled';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 
-export const MoviePage = () => {
+ const MoviePage = () => {
   const [filmList, setFilmList] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const nameParam = searchParams.get('query') ?? '';
+  const location = useLocation();
 
   useEffect(() => {
     if (nameParam !== '' && nameParam !== null)
       fetchSearchFilms(nameParam).then(setFilmList).catch(console.log);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const changeQuery = value => {
     setSearchParams(value !== '' ? { query: value } : {});
   };
+
   const handelSubmit = e => {
     e.preventDefault();
     fetchSearchFilms(nameParam.trim()).then(data => {
@@ -26,7 +29,6 @@ export const MoviePage = () => {
         toast.error(`Sorry, there are not films for searching ${nameParam}`);
       }
       setFilmList(data);
-      setSearchParams('');
     });
   };
 
@@ -41,7 +43,9 @@ export const MoviePage = () => {
         <Ul>
           {filmList.map(({ title, id }) => (
             <Li key={id}>
-              <LinkModal to={`${id}`}>{title}</LinkModal>
+              <LinkModal to={`${id}`} state={{ from: location }}>
+                {title}
+              </LinkModal>
             </Li>
           ))}
         </Ul>
@@ -55,3 +59,4 @@ export const MoviePage = () => {
     </>
   );
 };
+export default MoviePage;

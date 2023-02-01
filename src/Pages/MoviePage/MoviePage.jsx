@@ -2,11 +2,11 @@ import { SearchBar } from 'components/SearchBar/SearchBar';
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { fetchSearchFilms } from 'services/useApi';
-import { Li, LinkModal, Ul } from './MoviesPage.styled';
+import { Li, LinkModal, Ul } from './MoviePage.styled';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 
-export const MoviesPage = () => {
+export const MoviePage = () => {
   const [filmList, setFilmList] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const nameParam = searchParams.get('query') ?? '';

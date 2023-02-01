@@ -1,19 +1,17 @@
 import { Form, Input, Button } from './SearchBar.styled';
-export const SearchBar = () => {
-  const onChange = e => {
-    e.target.value.toLowerCase();
-  };
+export const SearchBar = ({ onSubmit, value, onChange}) => {
   return (
-    <Form>
+    <Form onSubmit={onSubmit}>
       <Input
+        value={value}
+        onChange={e => onChange(e.target.value)}
         type="text"
-        name="searchFilm"
+        name="query"
         placeholder="Search film"
         required
         autoFocus
-        onChange={onChange}
       />
-      <Button>Search</Button>
+      <Button type="submit">Search</Button>
     </Form>
   );
 };

@@ -14,23 +14,33 @@ export async function fetchTrendingFilm() {
   });
   return response.data.results;
 }
-
-export function fetchSearchFilms(query) {
-  return axios.get(`${searchFilms}`, {
+export  async function fetchSearchFilms(query) {
+  const response = await axios(`${searchFilms}`, {
     params: {
       api_key: API_KEY,
       query: query,
     },
   });
+  return response.data.results;
 }
 
-export function fetchByMovieId(id) {
-  return axios.get(`movie/${id}`, {
+
+// export function fetchByMovieId(id) {
+//   return axios.get(`movie/${id}`, {
+//     params: {
+//       api_key: API_KEY,
+//     },
+//   });
+// }
+export async function fetchByMovieId(id) {
+  const response = axios(`movie/${id}`, {
     params: {
       api_key: API_KEY,
     },
   });
+  return response.data
 }
+
 
 export function fetchCastOfMovie(id) {
   return axios.get(`movie/${id}/credits`, {

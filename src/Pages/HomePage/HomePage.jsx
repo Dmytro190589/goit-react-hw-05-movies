@@ -3,11 +3,11 @@ import {  Outlet } from 'react-router-dom';
 import { fetchTrendingFilm } from 'services/useApi';
 import { H1, Li, LinkModal, Section, Ul } from './HomePage.styled';
 
-const HomePage = () => {
+export const HomePage = () => {
   const [trendList, setTrendList] = useState([]);
 
   useEffect(() => {
-    fetchTrendingFilm().then(setTrendList);
+    fetchTrendingFilm().then(setTrendList)
   }, []);
 
   return (
@@ -25,4 +25,3 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;

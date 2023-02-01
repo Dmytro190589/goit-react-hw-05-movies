@@ -59,6 +59,6 @@ color: black;
 text-decoration: none;
 :hover,
 :focus{
-color: orangered;
+color: blue;
 }
 `

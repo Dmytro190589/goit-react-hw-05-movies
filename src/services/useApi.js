@@ -14,7 +14,7 @@ export async function fetchTrendingFilm() {
   });
   return response.data.results;
 }
-export  async function fetchSearchFilms(query) {
+export async function fetchSearchFilms(query) {
   const response = await axios(`${searchFilms}`, {
     params: {
       api_key: API_KEY,
@@ -31,20 +31,20 @@ export async function fetchByMovieId(id) {
   });
   return response.data;
 }
-
-
-export function fetchCastOfMovie(id) {
-  return axios.get(`movie/${id}/credits`, {
+export async function fetchCastOfMovie(id) {
+  const response = await axios(`movie/${id}/credits`, {
     params: {
       api_key: API_KEY,
     },
   });
+  return response.data.cast;
 }
 
-export function fetchReviewsOfMovie(id) {
-  return axios.get(`movie/${id}/reviews`, {
+export async function fetchReviewsOfMovie(id) {
+  const response = await axios(`movie/${id}/reviews`, {
     params: {
       api_key: API_KEY,
     },
-  })
+  });
+  return response.data.results;
 }

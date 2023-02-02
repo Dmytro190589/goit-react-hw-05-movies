@@ -6,40 +6,37 @@ import { Li, LinkModal, Ul } from './MoviePage.styled';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 
- const MoviePage = () => {
+const MoviePage = () => {
   const [filmList, setFilmList] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const nameParam = searchParams.get('query') ?? '';
   const location = useLocation();
 
   useEffect(() => {
-    if (nameParam !== '' && nameParam !== null)
-      fetchSearchFilms(nameParam).then(setFilmList).catch(console.log);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const changeQuery = value => {
-    setSearchParams(value !== '' ? { query: value } : {});
-  };
+    if (!nameParam) {
+      return;
+    }
+    fetchSearchFilms(nameParam)
+      .then(data => {
+        if (data.length === 0) {
+          toast.error(`Sorry, there are not films for searching ${nameParam}`);
+        }
+        setFilmList(data);
+      })
+      .catch(console.log);
+  }, [nameParam]);
 
   const handelSubmit = e => {
     e.preventDefault();
-    fetchSearchFilms(nameParam.trim()).then(data => {
-      if (data.length === 0) {
-        toast.error(`Sorry, there are not films for searching ${nameParam}`);
-      }
-      setFilmList(data);
-    });
+    const { value } = e.currentTarget.elements.query;
+    if (value) {
+      setSearchParams({ query: value });
+    }
   };
-
   return (
     <>
-      <SearchBar
-        onSubmit={handelSubmit}
-        onChange={changeQuery}
-        value={nameParam}
-      />
-      {filmList && (
+      <SearchBar onSubmit={handelSubmit} />
+      {filmList.length > 0 && (
         <Ul>
           {filmList.map(({ title, id }) => (
             <Li key={id}>
